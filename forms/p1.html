@@ -1,0 +1,156 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>
+            Forms
+        </title>
+        <!-- <style>
+            #leg1,#leg2{
+                background-color: cyan;
+            }
+
+            #fs1{
+                background-color: orchid;
+            }
+
+            .btn{
+                background-color: rgb(0, 140, 255);
+                border: none;
+                border-radius: 20px;
+                cursor: pointer;
+                color: white;
+                font-size: 13px;
+                width: 70px;
+                height: 25px;
+            }
+            .btn1{
+                position: relative;
+                margin-top: 15px;
+                padding-top: 10px;
+                left: 40%;
+            }
+
+            #tb1 table{
+                height: fit-content;
+                border: 10px;
+                
+            }
+
+            #fs2 fieldset{
+                position:absolute;
+                left: 40%;
+                height: 200px;
+                width: 400px;
+                justify-self: center;
+                align-self: center;
+            }
+        </style> -->
+    </head>
+
+    <body>
+        <form action="#" name="f1" method="post" style="background-color: yellow;">
+            <div id="fs1">
+            <fieldset>
+                <legend id="leg1" style="background-color: orchid;">Personal Information</legend>
+                <div id="tb1">
+                <table align="center">
+                    <tr>
+                        <th align="right">Sex:</th>
+                        <td><input type="radio" name="r1" value="Male">Male <input type="radio" name="r1" value="Female"> Female</td>
+                    </tr>
+                    
+                    <tr>
+                        <th align="right">Birthday:</th>
+                        <td>
+                            <select name="s1">
+                                <option value="Date">Date</option>
+                                <option value="1">1</option>
+                                <option value="2">2</option>
+                                <option value="3">3</option>
+                                <option value="4">4</option>
+                            </select>
+                            <select name="s2">
+                                <option value="Month">Month</option>
+                                <option value="Jan">Jan</option>
+                                <option value="Feb">Feb</option>
+                                <option value="Mar">Mar</option>
+                                <option value="Apr">Apr</option>
+                            </select>
+                            <select name="s3">
+                                <option value="Year">Year</option>
+                                <option value="2001">2001</option>
+                                <option value="2002">2002</option>
+                                <option value="2003">2003</option>
+                                <option value="2004">2004</option>
+                            </select>
+
+                        </td>
+                    </tr>
+
+                    <tr>
+                        <th align="right">State:</th>
+                        <td>
+                            <select name="s4">
+                                <option value="State">State</option>
+                                <option value="AP">AP</option>
+                                <option value="TEL">TEL</option>
+                                <option value="TN">TN</option>
+                                <option value="KN">KN</option>
+                            </select>
+                        </td>
+                    </tr>
+
+                    <tr>
+                        <th align="right">Country:</th>
+                        <td>
+                            <select name="s5">
+                                <option value="Country">Country</option>
+                                <option value="IND">INDIA</option>
+                                <option value="USA">USA</option>
+                                <option value="INDO">INDO</option>
+                            </select>
+                        </td>
+                    </tr>
+                </table>
+                </div>
+            </fieldset>
+            </div>
+            <div id="fs2"> 
+            <fieldset>
+                <legend id="leg2" style="background-color: orchid;">Site Registration</legend>
+                <table align="center">
+                    <tr>
+                        <th align="right">Username:</th>
+                        <td><input type="text" name="t1"></td>
+                    </tr>
+
+                    <tr>
+                        <th align="right">Password:</th>
+                        <td><input type="text" name="t2"></td>
+                    </tr>
+
+                    <tr>
+                        <th align="right">ReType Password:</th>
+                        <td><input type="text" name="t3"></td>
+                    </tr>
+
+                    <tr>
+                        <th align="right">Email:</th>
+                        <td><input type="text" name="t4"></td>
+                    </tr>
+
+                    <tr>
+                        <th align="right">ReType Email:</th>
+                        <td><input type="text" name="t5"></td>
+                    </tr>
+
+                </table>
+
+                <span class="btn1">
+                    <button type="submit" class="btn">Submit</button>
+                </span>
+            </fieldset>
+            </div>
+        </form>
+    </body>
+</html>
