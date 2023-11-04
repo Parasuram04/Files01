@@ -1,0 +1,604 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+
+    <title>Collapsible sidebar using Bootstrap 4</title>
+
+    <!-- Bootstrap CSS CDN -->
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.0/css/bootstrap.min.css" integrity="sha384-9gVQ4dYFwwWSjIDZnLEWnxCjeSWFphJiwGPXr1jddIhOegiu1FwO5qRGvFXOdJZ4" crossorigin="anonymous">
+    <!-- Scrollbar Custom CSS -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/malihu-custom-scrollbar-plugin/3.1.5/jquery.mCustomScrollbar.min.css">
+    <link rel="stylesheet" src="//normalize-css.googlecode.com/svn/trunk/normalize.css" />
+    <link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css" rel="stylesheet">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
+    <!-- Font Awesome -->
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet"/>
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css?family=Roboto:300,400,500,700&display=swap" rel="stylesheet"/>
+    
+    <!-- MDB -->
+    <!-- <link href="https://cdnjs.cloudflare.com/ajax/libs/mdb-ui-kit/6.4.1/mdb.min.css" rel="stylesheet"/> -->
+    <!-- <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.0/css/bootstrap.min.css" integrity="sha384-9gVQ4dYFwwWSjIDZnLEWnxCjeSWFphJiwGPXr1jddIhOegiu1FwO5qRGvFXOdJZ4" crossorigin="anonymous"> -->
+    <!-- Font Awesome JS -->
+    <script defer src="https://use.fontawesome.com/releases/v5.0.13/js/solid.js" integrity="sha384-tzzSw1/Vo+0N5UhStP3bvwWPq+uvzCMfrN1fEFe+xBmv1C/AtVX5K0uZtmcHitFZ" crossorigin="anonymous"></script>
+    <script defer src="https://use.fontawesome.com/releases/v5.0.13/js/fontawesome.js" integrity="sha384-6OIrr52G08NpOFSZdxxz1xdNSndlD4vdcf/q2myIUVO0VsqaGHJsB0RaBE01VTOY" crossorigin="anonymous"></script>
+<style>
+
+body,header,footer{
+       background-image: url("https://images.pexels.com/photos/1101122/pexels-photo-1101122.jpeg?auto=compress&cs=tinysrgb&w=400");
+        /* background-image: url("https://images.pexels.com/photos/255379/pexels-photo-255379.jpeg?auto=compress&cs=tinysrgb&w=400"); */
+        background-size: cover;
+      }
+
+      .card:hover {
+          cursor: pointer;
+          transform: scale(1.1);
+      }
+
+      .card {
+          transition: transform 0.2s ease;
+      }
+      .card {
+          box-shadow: 0 4px 6px 0 rgba(22, 22, 26, 0.18);
+          border-radius: 10px;
+          border: 0;
+          background-color: transparent;
+          font-weight: bold;
+      }
+
+      .btn:hover{
+        transform: scale(1.1);
+      }
+      .btn{
+        transition: transform 0.2s ease;
+      }
+
+/*
+    DEMO STYLE
+*/
+
+@import "https://fonts.googleapis.com/css?family=Poppins:300,400,500,600,700";
+body {
+    font-family: 'Poppins', sans-serif;
+}
+
+p {
+    font-family: 'Poppins', sans-serif;
+    font-size: 1.1em;
+    font-weight: 300;
+    line-height: 1.7em;
+    color: #999;
+}
+
+a,
+a:hover,
+a:focus {
+    color: inherit;
+    text-decoration: none;
+    transition: all 0.3s;
+}
+
+.navbar {
+    padding: 15px 10px;
+    background: #fff;
+    border: none;
+    border-radius: 0;
+    margin-bottom: 40px;
+    box-shadow: 1px 1px 3px rgba(0, 0, 0, 0.1);
+}
+
+.navbar-btn {
+    box-shadow: none;
+    outline: none !important;
+    border: none;
+}
+
+.line {
+    width: 100%;
+    height: 1px;
+    border-bottom: 1px dashed #ddd;
+    margin: 40px 0;
+}
+
+/* ---------------------------------------------------
+    SIDEBAR STYLE
+----------------------------------------------------- */
+
+#sidebar {
+    width: 250px;
+    position: fixed;
+    top: 0;
+    left: -250px;
+    height: 100vh;
+    z-index: 999;
+    background: #17A2B8;
+    color: #fff;
+    transition: all 0.3s;
+    overflow-y: scroll;
+    box-shadow: 3px 3px 3px rgba(0, 0, 0, 0.2);
+}
+
+#sidebar.active {
+    left: 0;
+}
+
+#dismiss {
+    width: 35px;
+    height: 35px;
+    line-height: 35px;
+    text-align: center;
+    background: #17A2B8;
+    position: absolute;
+    top: 10px;
+    right: 10px;
+    cursor: pointer;
+    -webkit-transition: all 0.3s;
+    -o-transition: all 0.3s;
+    transition: all 0.3s;
+}
+
+#dismiss:hover {
+    background: #fff;
+    color: #17A2B8;
+}
+
+.overlay {
+    display: none;
+    position: fixed;
+    width: 100vw;
+    height: 100vh;
+    background: rgba(0, 0, 0, 0.7);
+    z-index: 998;
+    opacity: 0;
+    transition: all 0.5s ease-in-out;
+}
+.overlay.active {
+    display: block;
+    opacity: 1;
+}
+
+#sidebar .sidebar-header {
+    padding: 20px;
+    background: #17A2B8;
+}
+
+#sidebar ul.components {
+    padding: 20px 0;
+    border-bottom: 1px solid #17A2B8;
+}
+
+#sidebar ul p {
+    color: #fff;
+    padding: 10px;
+}
+
+#sidebar ul li a {
+    padding: 10px;
+    font-size: 1.1em;
+    display: block;
+}
+
+#sidebar ul li a:hover {
+    color: #17A2B8;
+    background: #fff;
+}
+
+#sidebar ul li.active>a,
+a[aria-expanded="true"] {
+    color: #fff;
+    background: #17A2B8;
+}
+
+a[data-toggle="collapse"] {
+    position: relative;
+}
+
+.dropdown-toggle::after {
+    display: block;
+    position: absolute;
+    top: 50%;
+    right: 20px;
+    transform: translateY(-50%);
+}
+
+ul ul a {
+    font-size: 0.9em !important;
+    padding-left: 30px !important;
+    background: #17A2B8;
+}
+
+
+#content {
+    width: 100%;
+    padding: 20px;
+    min-height: 100vh;
+    transition: all 0.3s;
+    position: absolute;
+    top: 0;
+    right: 0;
+}
+
+
+
+
+</style>
+
+</head>
+
+<body>
+
+    <div class="wrapper">
+        <nav id="sidebar">
+            <div id="dismiss">
+              <i class="fas fa-arrow-left"></i>
+            </div>
+            <div class="sidebar-header">
+                <h3>Parasuram</h3>
+            </div>
+
+            <ul class="list-unstyled components">
+                <li>
+                    <a href="#">Home</a>
+                </li>
+                <li>
+                    <a href="#">About</a>
+                </li>
+                <li>
+                    <a href="#">Portfolio</a>
+                </li>
+                <li>
+                    <a href="#">Contact</a>
+                </li>
+            </ul>
+        </nav>
+
+        <!-- Page Content  -->
+        <div id="content">
+
+            <nav class="navbar navbar-expand-lg navbar-light bg-light">
+                <div class="container-fluid">
+
+                    <button type="button" id="sidebarCollapse" class="btn btn-info">
+                        <i class="fas fa-align-left"></i>
+                        <span>Toggle Sidebar</span>
+                    </button>
+                    <button class="btn btn-dark d-inline-block d-lg-none ml-auto" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+                        <i class="fas fa-align-justify"></i>
+                    </button>
+
+                    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+                        <ul class="nav navbar-nav ml-auto">
+                            <li class="nav-item active">
+                                <a class="nav-link" href="#">Page</a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link" href="#">Page</a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link" href="#">Page</a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link" href="#">Page</a>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+            </nav>
+
+<!--Main layout-->
+<main class="my-5">
+<div class="container">
+<!--Section: Content-->
+<section class="text-center">
+<h1 class="mb-5"><strong>Indian Cricketers</strong></h1>
+
+<div class="row">
+<div class="col-lg-4 col-md-12 mb-4">
+<div class="card">
+<div class="bg-image hover-zoom">
+<img src="https://media.gettyimages.com/id/107684365/photo/sachin-tendulkar-of-india-celebrates-his-50th-test-century-during-day-4-of-the-1st-test-match.jpg?s=612x612&w=0&k=20&c=RjZImlaXHqGSqVyR1Qu48conZFeLNkSSIvv6C-mWIcA=" class="img-fluid w-100" />
+</div>
+<div class="card-body">
+<h5 class="card-title">Sachin Tendulkar</h5>
+<p class="card-text">
+  Sachin Tendulkar, often referred to as the "Master Blaster".He is the cricketing legend and one of the greatest batsmen in the history of the sport. Born on April 24, 1973, in Mumbai, India.
+</p>
+<a href="https://en.wikipedia.org/wiki/Sachin_Tendulkar" class="btn btn-primary" target="_blank">Know more..</a>
+</div>
+</div>
+</div>
+
+<div class="col-lg-4 col-md-6 mb-4">
+<div class="card">
+<div class="bg-image hover-overlay ripple" data-mdb-ripple-color="light">
+<img src="https://media.gettyimages.com/id/1161173063/photo/ms-dhoni-of-india-in-action-batting-during-the-semi-final-match-of-the-icc-cricket-world-cup.jpg?s=612x612&w=0&k=20&c=YMKjnJ0UMLZONQLJgf6cv4WUWT-Dbjgur8t_tTA4g7Y=" class="img-fluid" />
+<a href="#!">
+  <div class="mask" style="background-color: rgba(251, 251, 251, 0.15);"></div>
+</a>
+</div>
+<div class="card-body">
+<h5 class="card-title">Mahendra Singh Dhoni</h5>
+<p class="card-text">
+  M.S.Dhoni,affectionately called "Thala" or "Captain Cool," is a cricketing legend and one of the most successful captains in the history of Indian cricket. 
+</p>
+<a href="https://en.wikipedia.org/wiki/MS_Dhoni" class="btn btn-primary" target="_blank">Know more..</a>
+</div>
+</div>
+</div>
+
+<div class="col-lg-4 col-md-6 mb-4">
+<div class="card">
+<div class="bg-image hover-overlay ripple" data-mdb-ripple-color="light">
+<img src="https://media.gettyimages.com/id/1020059034/photo/india-batsman-virat-kohli-celebrates-reaching-his-century-during-day-four-of-the-3rd-test.jpg?s=612x612&w=0&k=20&c=A4Q2pJDWVeO4CLQlyKTzOH-R8b7rY6orAIyEYL1pbsE=" class="img-fluid" />
+<a href="#!">
+  <div class="mask" style="background-color: rgba(251, 251, 251, 0.15);"></div>
+</a>
+</div>
+<div class="card-body">
+<h5 class="card-title">Virat Kohli</h5>
+<p class="card-text">
+  Virat Kohli is a renowned Indian cricketer and one of the most prolific batsmen in contemporary cricket.
+   Kohli is known for his extraordinary talent, consistency, and passion for the game.
+</p>
+<a href="https://en.wikipedia.org/wiki/Virat_Kohli" class="btn btn-primary" target="_blank">Know more..</a>
+</div>
+</div>
+</div>
+</div>
+
+<div class="row">
+<div class="col-lg-4 col-md-12 mb-4">
+<div class="card">
+<div class="bg-image hover-overlay ripple" data-mdb-ripple-color="light">
+<img src="https://media.gettyimages.com/id/1154108006/photo/topshot-indias-rohit-sharma-celebrates-after-reaching-his-century-during-the-2019-cricket.jpg?s=612x612&w=0&k=20&c=QBtmoyPX6sZJqCjp11L4JNvbtYK5-NYOti2PzRbU-mo=" class="img-fluid" />
+<a href="#!">
+  <div class="mask" style="background-color: rgba(251, 251, 251, 0.15);"></div>
+</a>
+</div>
+<div class="card-body">
+<h5 class="card-title">Rohit Sharma</h5>
+<p class="card-text">
+  Rohit Sharma, often referred to as "Hitman," is a prominent Indian cricketer known for his remarkable batting and consistency in cricket.
+   Rohit Sharma is considered one of the finest openers in the game.
+</p>
+<a href="https://en.wikipedia.org/wiki/Rohit_Sharma" class="btn btn-primary" target="_blank">Know more..</a>
+</div>
+</div>
+</div>
+
+<div class="col-lg-4 col-md-6 mb-4">
+<div class="card">
+<div class="bg-image hover-overlay ripple" data-mdb-ripple-color="light">
+<img src="https://media.gettyimages.com/id/693724800/photo/shikhar-dhawan-of-india-celebrates-his-century-during-the-icc-champions-trophy-cricket-match.jpg?s=612x612&w=0&k=20&c=QerYGTQNk_Z-0hcbjuU4XlQ0CLky6KDvIUfDXzzuZRI=" class="img-fluid" />
+<a href="#!">
+  <div class="mask" style="background-color: rgba(251, 251, 251, 0.15);"></div>
+</a>
+</div>
+<div class="card-body">
+<h5 class="card-title">Shikhar Dhawan</h5>
+<p class="card-text">
+  Shikhar Dhawan, known for his style and aggressive batting,he is a prominent Indian cricketer. 
+  Dhawan is widely recognized for his explosive performances as an opening batsman.
+</p>
+<a href="https://en.wikipedia.org/wiki/Shikhar_Dhawan" class="btn btn-primary" target="_blank">Know more..</a>
+</div>
+</div>
+</div>
+
+<div class="col-lg-4 col-md-6 mb-4">
+<div class="card">
+<div class="bg-image hover-overlay ripple" data-mdb-ripple-color="light">
+<img src="https://media.gettyimages.com/id/1332691486/photo/ravindra-jadeja-of-india-hits-out-during-day-three-of-the-first-lv-insurance-test-match.jpg?s=612x612&w=0&k=20&c=zvbGYa-6p1a7-AwWPVS1g6HMwEOMrVjV-9f9abMyQuk=" class="img-fluid" />
+<a href="#!">
+  <div class="mask" style="background-color: rgba(251, 251, 251, 0.15);"></div>
+</a>
+</div>
+<div class="card-body">
+<h5 class="card-title">Ravindra Jadeja</h5>
+<p class="card-text">
+  Ravindra Jadeja,affectionately called "Jaddu" or "Sir Jadeja," is an accomplished Indian cricketer known for his exceptional all-round skills. 
+  Jadeja has made a significant impact on both the International cricket and T20 leagues.
+</p>
+<a href="https://en.wikipedia.org/wiki/Ravindra_Jadeja" class="btn btn-primary" target="_blank">Know more..</a>
+</div>
+</div>
+</div>
+</div>
+
+
+<div class="row">
+<div class="col-lg-4 col-md-12 mb-4">
+<div class="card">
+<div class="bg-image hover-zoom">
+<img src="https://media.gettyimages.com/id/1406342735/photo/jasprit-bumrah-of-india-hits-out-as-35-is-conceded-in-an-over-by-stuart-broad-during-day-two.jpg?s=612x612&w=0&k=20&c=9T1JqCEjtYsfxqetDPGes7VBrHOMuFrASi10GGDCtPY=" class="img-fluid w-100" />
+</div>
+<div class="card-body">
+<h5 class="card-title">Jasprit Bumrah</h5>
+<p class="card-text">
+  Jasprit Bumrah, often called "Boom Boom Bumrah," is an Indian fast bowler who is one of the most accurate pacers in modern cricket.
+   Bumrah is known for his unconventional bowling action, exceptional speed, and ability to consistently deliver yorkers with pinpoint accuracy.
+</p>
+<a href="https://en.wikipedia.org/wiki/Jasprit_Bumrah" class="btn btn-primary" target="_blank">Know more..</a>
+</div>
+</div>
+</div>
+
+<div class="col-lg-4 col-md-6 mb-4">
+<div class="card">
+<div class="bg-image hover-overlay ripple" data-mdb-ripple-color="light">
+<img src="https://media.gettyimages.com/id/914076660/photo/indian-bowler-yuzvendra-chahal-celebrates-the-dismissal-south-african-batsman-chris-morris.jpg?s=612x612&w=0&k=20&c=PWT9ET_drJZuhBAK4LU5M5O4YfWRA6epdN8tow-rxgc=" class="img-fluid" />
+<a href="#!">
+  <div class="mask" style="background-color: rgba(251, 251, 251, 0.15);"></div>
+</a>
+</div>
+<div class="card-body">
+<h5 class="card-title">Yuzvendra Chahal</h5>
+<p class="card-text">
+  Yuzvendra Chahal, known for his crafty leg-spin bowling, is an Indian cricketer who has made a significant impact on the country's limited-overs cricket.
+  Chahal is recognized for his ability to deceive batsmen with his flight, turn, and variations.
+</p>
+<a href="https://en.wikipedia.org/wiki/Yuzvendra_Chahal" class="btn btn-primary" target="_blank">Know more..</a>
+</div>
+</div>
+</div>
+
+<div class="col-lg-4 col-md-6 mb-4">
+<div class="card">
+<div class="bg-image hover-overlay ripple" data-mdb-ripple-color="light">
+<img src="https://media.gettyimages.com/id/1234712595/photo/indias-mohammed-shami-celebrates-hitting-a-half-century-during-day-five-of-the-cinch-second.jpg?s=612x612&w=0&k=20&c=VBlLhk9lFM6xTCJI3vyKu55ZxMLktK6F8-PGUolbTNY=" class="img-fluid" />
+<a href="#!">
+  <div class="mask" style="background-color: rgba(251, 251, 251, 0.15);"></div>
+</a>
+</div>
+<div class="card-body">
+<h5 class="card-title">Mohammed Shami</h5>
+<p class="card-text">
+  Mohammed Shami, a right-arm fast bowler from India, is known for his ability to generate pace, swing, and seam movement with precision.
+    Shami has emerged as a vital component of the Indian cricket team's fast bowling attack.
+</p>
+<a href="https://en.wikipedia.org/wiki/Mohammed_Shami" class="btn btn-primary" target="_blank">Know more..</a>
+</div>
+</div>
+</div>
+</div>
+
+
+
+</section>
+<!--Section: Content-->
+
+<!-- Pagination -->
+
+<nav class="my-4" aria-label="...">
+<ul class="pagination pagination-circle justify-content-center">
+<li class="page-item">
+<a class="page-link" href="./symbols.html">Previous</a>
+</li>
+<li class="page-item"><a class="page-link" href="./symbols.html">1</a></li>
+<li class="page-item active" aria-current="page">
+<a class="page-link" href="#">2 <span class="visually-hidden">(current)</span></a>
+</li>
+<li class="page-item"><a class="page-link" href="./monuments.html">3</a></li>
+<li class="page-item">
+<a class="page-link" href="./monuments.html">Next</a>
+</li>
+</ul>
+</nav>
+</div>
+</main>
+<!--Main layout-->
+
+<footer class="bg-light text-center text-white">
+<!-- Grid container -->
+<div class="container p-4 pb-0">
+<!-- Section: Social media -->
+<section class="mb-4">
+<!-- Facebook -->
+<a
+class="btn text-white btn-floating m-1"
+style="background-color: #3b5998;"
+href="https://www.facebook.com/parasuram.kagitha.7/"
+role="button" target="_blank"
+><i class="fab fa-facebook-f"></i
+></a>
+
+<!-- Twitter -->
+<a
+class="btn text-white btn-floating m-1"
+style="background-color: #55acee;"
+href=" https://x.com/Parasuram_?t=uZZBkaxFGaa9gOol5sxciw&s=08"
+role="button" target="_blank"
+><i class="fab fa-twitter"></i
+></a>
+
+<!-- Google -->
+<a
+class="btn text-white btn-floating m-1"
+style="background-color: #dd4b39;"
+href="https://www.google.com/search?q=parasuram+kagitha&rlz=1C1CHZL_enIN1051IN1051&oq=parasuram+kagitha&aqs=chrome..69i57j0i13i512l4j0i5i13i30j69i61j69i60.11906j0j7&sourceid=chrome&ie=UTF-8#ip=1"
+role="button" target="_blank"
+><i class="fab fa-google"></i
+></a>
+
+<!-- Instagram -->
+<a
+class="btn text-white btn-floating m-1"
+style="background-color: #ac2bac;"
+href="https://www.instagram.com/parasuramkagitha/"
+role="button" target="_blank"
+><i class="fab fa-instagram"></i
+></a>
+
+<!-- Linkedin -->
+<a
+class="btn text-white btn-floating m-1"
+style="background-color: #0082ca;"
+href="https://www.linkedin.com/in/parasuram-kagitha-13778b275/"
+role="button" target="_blank"
+><i class="fab fa-linkedin-in"></i
+></a>
+<!-- Github -->
+<a
+class="btn text-white btn-floating m-1"
+style="background-color: #333333;"
+href="https://github.com/Parasuram04"
+role="button" target="_blank"
+><i class="fab fa-github"></i
+></a>
+</section>
+<!-- Section: Social media -->
+</div>
+</div>
+<!-- Grid container -->
+
+<!-- Copyright -->
+<div class="text-center p-3" style="background-color: rgba(0, 1, 10, 0.2);">
+© 2020 Copyright:
+<a class="text-white" href="https://www.google.com">Google</a>
+</div>
+<!-- Copyright -->
+
+
+
+
+            
+        </div>
+    </div>
+
+    <div class="overlay"></div>
+
+    <!-- jQuery CDN - Slim version (=without AJAX) -->
+    <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
+    <!-- Popper.JS -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.0/umd/popper.min.js" integrity="sha384-cs/chFZiN24E4KMATLdqdvsezGxaGsi4hLGOzlXwp5UZB1LY//20VyM2taTB4QvJ" crossorigin="anonymous"></script>
+    <!-- Bootstrap JS -->
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.0/js/bootstrap.min.js" integrity="sha384-uefMccjFJAIv6A+rW+L4AHf99KvxDjWSu1z9VI8SKNVmz4sk7buKt/6v9KI65qnm" crossorigin="anonymous"></script>
+    <!-- jQuery Custom Scroller CDN -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/malihu-custom-scrollbar-plugin/3.1.5/jquery.mCustomScrollbar.concat.min.js"></script>
+
+    <script type="text/javascript">
+        $(document).ready(function () {
+            $("#sidebar").mCustomScrollbar({
+                theme: "minimal"
+            });
+
+            $('#dismiss, .overlay').on('click', function () {
+                $('#sidebar').removeClass('active');
+                $('.overlay').removeClass('active');
+            });
+
+            $('#sidebarCollapse').on('click', function () {
+                $('#sidebar').addClass('active');
+                $('.overlay').addClass('active');
+                $('.collapse.in').toggleClass('in');
+                $('a[aria-expanded=true]').attr('aria-expanded', 'false');
+            });
+        });
+    </script>
+</body>
+
+</html>
